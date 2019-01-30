@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Generate LED Pattern</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Generate LED Pattern</h1>
+    <div class="row work-area">
+      <div class="col-md-4">
+        <h3>Pattern</h3>
+        <div class="col-sm-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="loop" checked>
+            <label class="form-check-label" for="loop">
+              Loop?
+            </label>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <form action="">
+            <input type="number" class="form-control duration" placeholder="Framerate (sec)">
+          </form>
+        </div>
+        <div class="pattern-list">
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>Matrix</h3>
+        <table class="matrix" cellpadding="3">
+          <tr>
+            <td class="led" id="1"></td>
+            <td class="led" id="2"></td>
+            <td class="led" id="3"></td>
+            <td class="led" id="4"></td>
+            <td class="led" id="5"></td>
+            <td class="led" id="6"></td>
+            <td class="led" id="7"></td>
+            <td class="led" id="8"></td>
+          </tr>
+          <tr>
+            <td class="led" id="9"></td>
+            <td class="led" id="10"></td>
+            <td class="led" id="11"></td>
+            <td class="led" id="12"></td>
+            <td class="led" id="13"></td>
+            <td class="led" id="14"></td>
+            <td class="led" id="15"></td>
+            <td class="led" id="16"></td>
+          </tr>
+          <tr>
+            <td class="led" id="17"></td>
+            <td class="led" id="18"></td>
+            <td class="led" id="19"></td>
+            <td class="led" id="20"></td>
+            <td class="led" id="21"></td>
+            <td class="led" id="22"></td>
+            <td class="led" id="23"></td>
+            <td class="led" id="24"></td>
+          </tr>
+          <tr>
+            <td class="led" id="25"></td>
+            <td class="led" id="26"></td>
+            <td class="led" id="27"></td>
+            <td class="led" id="28"></td>
+            <td class="led" id="29"></td>
+            <td class="led" id="30"></td>
+            <td class="led" id="31"></td>
+            <td class="led" id="32"></td>
+          </tr>
+          <tr>
+            <td class="led" id="33"></td>
+            <td class="led" id="34"></td>
+            <td class="led" id="35"></td>
+            <td class="led" id="36"></td>
+            <td class="led" id="37"></td>
+            <td class="led" id="38"></td>
+            <td class="led" id="39"></td>
+            <td class="led" id="40"></td>
+          </tr>
+          <tr>
+            <td class="led" id="41"></td>
+            <td class="led" id="42"></td>
+            <td class="led" id="43"></td>
+            <td class="led" id="44"></td>
+            <td class="led" id="45"></td>
+            <td class="led" id="46"></td>
+            <td class="led" id="47"></td>
+            <td class="led" id="48"></td>
+          </tr>
+          <tr>
+            <td class="led" id="49"></td>
+            <td class="led" id="50"></td>
+            <td class="led" id="51"></td>
+            <td class="led" id="52"></td>
+            <td class="led" id="53"></td>
+            <td class="led" id="54"></td>
+            <td class="led" id="55"></td>
+            <td class="led" id="56"></td>
+          </tr>
+          <tr>
+            <td class="led" id="57"></td>
+            <td class="led" id="58"></td>
+            <td class="led" id="59"></td>
+            <td class="led" id="60"></td>
+            <td class="led" id="61"></td>
+            <td class="led" id="62"></td>
+            <td class="led" id="63"></td>
+            <td class="led" id="64"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4">
+        <h3>Parameters</h3>
+        <div class="row">
+          <div class="col-sm-4">Active LEDs</div>
+          <div class="col-sm-8"><span id="number-active">0</span></div>
+          <br /><br/>
+        <div class="col-sm-12"><button type="button" class="btn btn-danger clear-matrix">Clear Matrix</button>&nbsp;
+          <button type="button" class="btn btn-warning fill-matrix">Fill Matrix</button>&nbsp;
+          <button type="button" class="btn btn-success" id="add">Enqueue</button><br /><br />
+        </div>
+        </div>
+          <div class="col-xs-12">
+            <h3>Code</h3>
+            <textarea class="form-control" id="code" rows="6"></textarea>
+            <br /><button type="button" class="btn btn-primary send">Send to Device</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+var activeLeds = [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+];
+
+var masterMatrix = { commands: [], loop: true, frameRate: 0.1 };
+
+var smallTable =
+  '<table class="matrix-small" cellpadding="3"><tr><td class="led" data-attr-led-index="1"></td><td class="led" data-attr-led-index="2"></td><td class="led" data-attr-led-index="3"></td><td class="led" data-attr-led-index="4"></td><td class="led" data-attr-led-index="5"></td><td class="led" data-attr-led-index="6"></td><td class="led" data-attr-led-index="7"></td><td class="led" data-attr-led-index="8"></td></tr><tr><td class="led" data-attr-led-index="9"></td><td class="led" data-attr-led-index="10"></td><td class="led" data-attr-led-index="11"></td><td class="led" data-attr-led-index="12"></td><td class="led" data-attr-led-index="13"></td><td class="led" data-attr-led-index="14"></td><td class="led" data-attr-led-index="15"></td><td class="led" data-attr-led-index="16"></td></tr><tr><td class="led" data-attr-led-index="17"></td><td class="led" data-attr-led-index="18"></td><td class="led" data-attr-led-index="19"></td><td class="led" data-attr-led-index="20"></td><td class="led" data-attr-led-index="21"></td><td class="led" data-attr-led-index="22"></td><td class="led" data-attr-led-index="23"></td><td class="led" data-attr-led-index="24"></td></tr><tr><td class="led" data-attr-led-index="25"></td><td class="led" data-attr-led-index="26"></td><td class="led" data-attr-led-index="27"></td><td class="led" data-attr-led-index="28"></td><td class="led" data-attr-led-index="29"></td><td class="led" data-attr-led-index="30"></td><td class="led" data-attr-led-index="31"></td><td class="led" data-attr-led-index="32"></td></tr><tr><td class="led" data-attr-led-index="33"></td><td class="led" data-attr-led-index="34"></td><td class="led" data-attr-led-index="35"></td><td class="led" data-attr-led-index="36"></td><td class="led" data-attr-led-index="37"></td><td class="led" data-attr-led-index="38"></td><td class="led" data-attr-led-index="39"></td><td class="led" data-attr-led-index="40"></td></tr><tr><td class="led" data-attr-led-index="41"></td><td class="led" data-attr-led-index="42"></td><td class="led" data-attr-led-index="43"></td><td class="led" data-attr-led-index="44"></td><td class="led" data-attr-led-index="45"></td><td class="led" data-attr-led-index="46"></td><td class="led" data-attr-led-index="47"></td><td class="led" data-attr-led-index="48"></td></tr><tr><td class="led" data-attr-led-index="49"></td><td class="led" data-attr-led-index="50"></td><td class="led" data-attr-led-index="51"></td><td class="led" data-attr-led-index="52"></td><td class="led" data-attr-led-index="53"></td><td class="led" data-attr-led-index="54"></td><td class="led" data-attr-led-index="55"></td><td class="led" data-attr-led-index="56"></td></tr><tr><td class="led" data-attr-led-index="57"></td><td class="led" data-attr-led-index="58"></td><td class="led" data-attr-led-index="59"></td><td class="led" data-attr-led-index="60"></td><td class="led" data-attr-led-index="61"></td><td class="led" data-attr-led-index="62"></td><td class="led" data-attr-led-index="63"></td><td class="led" data-attr-led-index="64"></td></tr></table>';
+
+$('.led').click(function(e) {
+  var ledIndex = parseInt($(this).attr('id')) - 1;
+  if (activeLeds[ledIndex] === 0) {
+    $(this).addClass('active');
+    activeLeds[ledIndex] = 1;
+  } else {
+    $(this).removeClass('active');
+    activeLeds[ledIndex] = 0;
+  }
+  var numberActive = activeLeds.filter((led) => led === 1).length;
+  $('#number-active').text(numberActive);
+  console.log(activeLeds);
+});
+
+$('.clear-matrix').click(function(e) {
+  e.preventDefault();
+  activeLeds.fill(0);
+  $('.matrix .led').each(function(led) {
+    $(this).removeClass('active');
+  });
+});
+
+$('.fill-matrix').click(function(e) {
+  e.preventDefault();
+  activeLeds.fill(1);
+  $('.matrix .led').each(function(led) {
+    $(this).addClass('active');
+  });
+});
+
+$('#add').click(function(e) {
+  e.preventDefault();
+  var duration = parseFloat($('.duration').val()) || 0.1;
+  var theseLeds = activeLeds.slice();
+  pushToPattern(theseLeds, duration);
+  console.log(masterMatrix);
+});
+
+function pushToPattern(LEDs, duration) {
+  var patternIndex = masterMatrix.commands.length;
+  masterMatrix.commands.push(LEDs);
+  masterMatrix.frameRate = duration;
+  $('.pattern-list').append(
+    '<div class="row"><div class="pattern" data-attr-pattern-index="' +
+      patternIndex +
+      '"><div class="col-xs-4">' +
+      smallTable +
+      '</div><div class="col-xs-8"></div></div></div><br />'
+  );
+  $('.pattern[data-attr-pattern-index=' + patternIndex + ']')
+    .find('.led')
+    .each(function(led) {
+      var ledIndex = $(this).attr('data-attr-led-index') - 1;
+      if (LEDs[ledIndex] === 1) {
+        $(this).addClass('active');
+        console.log('adding to', ledIndex);
+      }
+    });
+
+  $('#code').val(JSON.stringify(masterMatrix));
+}
+
+$('.send').click(function(e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: 'http://192.168.1.60:3000/light',
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(masterMatrix),
+    success: function() {
+      console.log('success');
+    },
+  });
+});
+</script>
+</body>
+</html>
